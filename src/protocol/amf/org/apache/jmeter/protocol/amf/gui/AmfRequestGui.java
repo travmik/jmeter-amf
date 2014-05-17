@@ -94,10 +94,10 @@ public class AmfRequestGui extends AbstractSamplerGui {
         xmlContent.setText("");
         xmlContent.setCaretPosition(0);
         xmlContent.setLanguage(JSyntaxTextArea.SYNTAX_STYLE_XML);
-        panel.add(new JTextScrollPane(xmlContent),BorderLayout.NORTH);
-        centerPanel.add(panel, BorderLayout.NORTH);
+        panel.add(new JTextScrollPane(xmlContent), BorderLayout.WEST);
+        centerPanel.add(panel);
         
-        add(centerPanel, BorderLayout.CENTER);
+        add(centerPanel);
     }
 
     /**
