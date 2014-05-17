@@ -19,19 +19,17 @@ package org.apache.jmeter.protocol.amf.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.jmeter.gui.util.JSyntaxTextArea;
+import org.apache.jmeter.gui.util.JTextScrollPane;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.protocol.amf.sampler.AmfRequest;
 import org.apache.jmeter.protocol.amf.sampler.AmfRequestFactory;
@@ -52,14 +50,9 @@ public class AmfRequestGui extends AbstractSamplerGui {
 
 	private UrlConfigGui urlConfigGui;
 	
-	private JComboBox objectEncodingCombo;
+	private JComboBox<String> objectEncodingCombo;
 	
-    private JFrame xmlEditor;
-    //private JSyntaxTextArea xmlContent;
-    
-    private StringBuffer amfXml;
-    
-    private JLabel xmlSize;
+    private JSyntaxTextArea xmlContent;
     
     private JTextField resVar;
 
@@ -82,8 +75,6 @@ public class AmfRequestGui extends AbstractSamplerGui {
     private void init() {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
-        
-        amfXml = new StringBuffer();
 
         add(makeTitlePanel(), BorderLayout.NORTH);
 
@@ -94,6 +85,17 @@ public class AmfRequestGui extends AbstractSamplerGui {
         // TODO: Some sort of accordian to shrink the URL config area
         urlConfigGui = new UrlConfigGui(false, false, false);
         centerPanel.add(urlConfigGui);
+        
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+        		"Amf request body")); // $NON-NLS-1$
+        
+        xmlContent = new JSyntaxTextArea(30, 150);
+        xmlContent.setText("");
+        xmlContent.setCaretPosition(0);
+        xmlContent.setLanguage(JSyntaxTextArea.SYNTAX_STYLE_XML);
+        panel.add(new JTextScrollPane(xmlContent),BorderLayout.NORTH);
+        centerPanel.add(panel, BorderLayout.NORTH);
         
         add(centerPanel, BorderLayout.CENTER);
     }
@@ -106,12 +108,9 @@ public class AmfRequestGui extends AbstractSamplerGui {
         super.configure(element);
         urlConfigGui.configure(element);
 
-        amfXml.setLength(0);
-        amfXml.append(element.getPropertyAsString(AmfRequest.AMFXML));
+        xmlContent.setInitialText(element.getPropertyAsString(AmfRequest.AMFXML));
         objectEncodingCombo.setSelectedItem(element.getPropertyAsString(AmfRequest.OBJECT_ENCODING_VERSION));
         resVar.setText(element.getPropertyAsString(AmfRequest.RESPONSE_VAR));
-        
-        updateXmlBytes();
     }
 
     /**
@@ -134,7 +133,7 @@ public class AmfRequestGui extends AbstractSamplerGui {
         super.configureTestElement(element);
         
         element.setProperty(AmfRequest.OBJECT_ENCODING_VERSION, String.valueOf(objectEncodingCombo.getSelectedItem()));
-        element.setProperty(AmfRequest.AMFXML, amfXml.toString(), "");
+        element.setProperty(AmfRequest.AMFXML, xmlContent.getText(), "");
         element.setProperty(AmfRequest.RESPONSE_VAR, resVar.getText());
     }
 
@@ -153,7 +152,8 @@ public class AmfRequestGui extends AbstractSamplerGui {
     public void clearGui() {
         super.clearGui();
         urlConfigGui.clear();
-        amfXml.setLength(0);
+        xmlContent.setInitialText("");
+        xmlContent.setCaretPosition(0);
     }
 
     
@@ -179,41 +179,14 @@ public class AmfRequestGui extends AbstractSamplerGui {
         
         leftPanel.add(objectEncodingCombo);
         
-        JButton editXml = new JButton(AmfResources.getResString("edit_xml_btn")); // $NON-NLS-1$
-        editXml.addActionListener(new ActionListener() {
-			@SuppressWarnings("serial")
-			public void actionPerformed(ActionEvent e) {
-        		openXmlEditor();
-        	}
-        });
-        leftPanel.add(editXml);
-        
-        xmlSize = new JLabel();
-        leftPanel.add(xmlSize);
-        
         rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
         
         rightPanel.add(new JLabel(AmfResources.getResString("res_var"))); // $NON-NLS-1$
         
         resVar = new JTextField();
-        resVar.setPreferredSize(new Dimension(100, 20));
+        resVar.setPreferredSize(new Dimension(100, 25));
         rightPanel.add(resVar);
         
         return panel;
-    }
-    
-    @SuppressWarnings("serial")
-	private void openXmlEditor() {
-    	xmlEditor = new AmfXmlEditorGui(amfXml) {
-			public void onSave() {
-				updateXmlBytes();
-			}
-		};
-		xmlEditor.pack();
-		xmlEditor.setVisible(true);
-    }
-    
-    private void updateXmlBytes() {
-    	xmlSize.setText("("+amfXml.length()+" chars)");
     }
 }

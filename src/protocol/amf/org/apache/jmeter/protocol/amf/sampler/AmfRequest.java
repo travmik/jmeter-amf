@@ -184,7 +184,13 @@ public class AmfRequest extends HTTPSampler2 implements Interruptible {
             int statusCode = client.executeMethod(httpMethod);
 
             // Needs to be done after execute to pick up all the headers
-            res.setRequestHeaders(getConnectionHeaders(httpMethod));
+            StringBuffer sb = new StringBuffer(getConnectionHeaders(httpMethod));
+            sb.append(System.lineSeparator());
+            sb.append(System.lineSeparator());
+            sb.append("AMF Request:");
+            sb.append(System.lineSeparator());
+            sb.append(amfXml);
+            res.setRequestHeaders(sb.toString());
 
             // Request sent. Now get the response:
             instream = httpMethod.getResponseBodyAsStream();
