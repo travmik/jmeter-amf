@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.CharUtils;
+import org.apache.commons.lang3.CharUtils;
 import org.apache.jmeter.protocol.amf.gui.AmfRequestGui;
 import org.apache.jmeter.protocol.amf.sampler.AmfRequest;
 import org.apache.jmeter.protocol.amf.util.AmfXmlConverter;

@@ -1,6 +1,10 @@
 Changelog
 ---------------------
 
+### Version 1.5
+* resolved amf2xml conversion bugs during recording
+* added maven nature of the project   
+
 ### Version 1.4
 * Compatibility with JMeter 2.6 (no backwards compatibility)
 

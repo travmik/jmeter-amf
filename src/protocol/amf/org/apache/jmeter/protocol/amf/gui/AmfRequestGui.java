@@ -26,14 +26,12 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.protocol.amf.sampler.AmfRequest;
 import org.apache.jmeter.protocol.amf.sampler.AmfRequestFactory;
@@ -41,7 +39,6 @@ import org.apache.jmeter.protocol.amf.util.AmfResources;
 import org.apache.jmeter.protocol.http.config.gui.UrlConfigGui;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jorphan.gui.JLabeledTextArea;
 
 import flex.messaging.io.MessageIOConstants;
 
@@ -58,6 +55,7 @@ public class AmfRequestGui extends AbstractSamplerGui {
 	private JComboBox objectEncodingCombo;
 	
     private JFrame xmlEditor;
+    //private JSyntaxTextArea xmlContent;
     
     private StringBuffer amfXml;
     

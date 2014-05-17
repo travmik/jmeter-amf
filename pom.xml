@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pl.mf.jmeter</groupId>
+	<artifactId>jmeter-amf</artifactId>
+	<version>1.5</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jmeter.version>2.11</jmeter.version>
+		<blazeds.version>4.5.0.0-SNAPSHOT</blazeds.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.jmeter</groupId>
+			<artifactId>ApacheJMeter</artifactId>
+			<version>${jmeter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jmeter</groupId>
+			<artifactId>ApacheJMeter_components</artifactId>
+			<version>${jmeter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jmeter</groupId>
+			<artifactId>ApacheJMeter_core</artifactId>
+			<version>${jmeter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jmeter</groupId>
+			<artifactId>ApacheJMeter_mail</artifactId>
+			<version>${jmeter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jmeter</groupId>
+			<artifactId>ApacheJMeter_http</artifactId>
+			<version>${jmeter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jmeter</groupId>
+			<artifactId>ApacheJMeter_java</artifactId>
+			<version>${jmeter.version}</version>
+		</dependency>
+		
+
+
+		<dependency>
+			<groupId>com.adobe.blazeds</groupId>
+			<artifactId>flex-messaging-remoting</artifactId>
+			<version>${blazeds.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.blazeds</groupId>
+			<artifactId>flex-messaging-common</artifactId>
+			<version>${blazeds.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.blazeds</groupId>
+			<artifactId>flex-messaging-core</artifactId>
+			<version>${blazeds.version}</version>
+		</dependency>
+	</dependencies>
+
+
+
+	<build>
+		<sourceDirectory>src/protocol/amf</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/protocol/amf</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>.</classpathPrefix>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

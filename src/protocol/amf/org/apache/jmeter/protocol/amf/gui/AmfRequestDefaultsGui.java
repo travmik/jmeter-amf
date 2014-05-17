@@ -36,7 +36,7 @@ import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.protocol.amf.sampler.AmfRequest;
 import org.apache.jmeter.protocol.amf.util.AmfResources;
-import org.apache.jmeter.protocol.http.config.gui.UrlConfigGui;
+//import org.apache.jmeter.protocol.http.config.gui.UrlConfigGui;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.JMeterProperty;
