@@ -137,7 +137,7 @@ public class AmfXmlConverter {
      * Converts complete AMF message to XML representation
      */
     public static String convertAmfMessageToXml(byte[] amf) {
-    	return AmfXmlConverter.convertAmfMessageToXml(amf, false);
+    	return AmfXmlConverter.convertAmfMessageToXml(amf, true);
     }
     public static String convertAmfMessageToXml(byte[] amf, boolean useAliasRegistry) {
     	XStream xs = getXStream();

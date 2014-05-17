@@ -460,7 +460,8 @@ public class AmfRequestHdr {
                     
                     // If AMF, try to process the request and store it
                     if (postData != null && postData.length() > 0) {
-    	            	String xml = AmfXmlConverter.convertAmfMessageToXml(postData.getBytes());
+    	            	//String xml = AmfXmlConverter.convertAmfMessageToXml(postData.getBytes());
+                    	String xml = AmfXmlConverter.convertAmfMessageToXml(rawPostData);
     	            	sampler.setProperty(AmfRequest.AMFXML, xml);
                     }
             	}
