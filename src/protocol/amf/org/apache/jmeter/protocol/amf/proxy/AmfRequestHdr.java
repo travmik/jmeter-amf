@@ -16,6 +16,7 @@
 
 package org.apache.jmeter.protocol.amf.proxy;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharUtils;
@@ -51,6 +59,8 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 //For unit tests, @see TestHttpRequestHdr
 
@@ -462,6 +472,8 @@ public class AmfRequestHdr {
                     if (postData != null && postData.length() > 0) {
     	            	//String xml = AmfXmlConverter.convertAmfMessageToXml(postData.getBytes());
                     	String xml = AmfXmlConverter.convertAmfMessageToXml(rawPostData);
+                    	//add amf service method to sample name
+                    	addAmfServiceMethod(xml);
     	            	sampler.setProperty(AmfRequest.AMFXML, xml);
                     }
             	}
@@ -484,6 +496,42 @@ public class AmfRequestHdr {
         if (log.isDebugEnabled()) {
             log.debug("sampler path = " + sampler.getPath());
         }
+    }
+    
+    private void addAmfServiceMethod(String amfXml){
+    	String sampleOldName = sampler.getName();
+    	if(sampleOldName != null && amfXml != null){
+    		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+    		DocumentBuilder builder = null;
+    		try {
+    		    builder = builderFactory.newDocumentBuilder();
+    		    Document document = builder.parse(new ByteArrayInputStream(amfXml.getBytes()));
+    		    XPath xPath =  XPathFactory.newInstance().newXPath();
+    		    String expression;
+    		    
+    		    String expressionFromProperty = JMeterUtils.getJMeterProperties().getProperty("amf.operation.name.xpath");
+    		    if(expressionFromProperty != null && !expressionFromProperty.equals("")){
+    		    	expression = expressionFromProperty;
+    		    }else{
+    		    	expression = "//operation";
+    		    }
+    		    
+    		    String operationName = xPath.compile(expression).evaluate(document);
+    		    
+    		    if(operationName != null && !operationName.equals("")){
+    		    	sampler.setName(sampleOldName + " - " + operationName);
+    		    }
+    		    
+    		} catch (ParserConfigurationException e) {
+    		    log.warn(e.getMessage());  
+    		} catch (SAXException e) {
+    		    log.warn(e.getMessage());
+			} catch (IOException e) {
+    		    log.warn(e.getMessage());
+			} catch (XPathExpressionException e) {
+    		    log.warn(e.getMessage());
+			}
+    	}
     }
 
     private boolean isBinaryContent(String contentType) {

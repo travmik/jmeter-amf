@@ -24,6 +24,8 @@ public class Tester {
 							new File(
 									"/mnt/mfranek/tmp/dev-tools/apache-jmeter-2.9-realtime/bin/out4.xml"),
 							xml);
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

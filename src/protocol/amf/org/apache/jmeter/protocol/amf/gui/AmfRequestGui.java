@@ -90,7 +90,7 @@ public class AmfRequestGui extends AbstractSamplerGui {
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
         		"Amf request body")); // $NON-NLS-1$
         
-        xmlContent = new JSyntaxTextArea(30, 150);
+        xmlContent = new JSyntaxTextArea(20, 150);
         xmlContent.setText("");
         xmlContent.setCaretPosition(0);
         xmlContent.setLanguage(JSyntaxTextArea.SYNTAX_STYLE_XML);
