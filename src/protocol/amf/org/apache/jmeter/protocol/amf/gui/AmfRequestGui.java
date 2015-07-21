@@ -171,10 +171,10 @@ public class AmfRequestGui extends AbstractSamplerGui {
         
         leftPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
 
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>(1);
         values.add("AMF"+String.valueOf(MessageIOConstants.AMF3)); // $NON-NLS-1$
 
-        objectEncodingCombo = new JComboBox(values.toArray());
+        objectEncodingCombo = new JComboBox<>(values.toArray(new String[values.size()]));
         objectEncodingCombo.setEditable(false);
         
         leftPanel.add(objectEncodingCombo);

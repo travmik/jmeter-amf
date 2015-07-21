@@ -57,7 +57,7 @@ public class AmfRequestDefaultsGui extends AbstractConfigGui implements ActionLi
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    private JComboBox objectEncodingCombo;
+    private JComboBox<String> objectEncodingCombo;
     
     private ArgumentsPanel propertyOverrides;
 
@@ -118,7 +118,7 @@ public class AmfRequestDefaultsGui extends AbstractConfigGui implements ActionLi
      */
 	@Override
     public TestElement createTestElement() {
-        ConfigTestElement element = new ConfigTestElement();
+        TestElement element = new ConfigTestElement();
         element.setName(this.getName());
         element.setProperty(TestElement.GUI_CLASS, this.getClass().getName());
         element.setProperty(TestElement.TEST_CLASS, element.getClass().getName());
@@ -131,8 +131,7 @@ public class AmfRequestDefaultsGui extends AbstractConfigGui implements ActionLi
      */
     @Override
 	public void modifyTestElement(TestElement element) {
-		ConfigTestElement cfg = (ConfigTestElement) element;
-		cfg.clear();
+        element.clear();
 		super.configureTestElement(element);
         
 		// Set AMF properties
@@ -167,12 +166,12 @@ public class AmfRequestDefaultsGui extends AbstractConfigGui implements ActionLi
 
     private JPanel getObjectEncodingVersionPanel() {
     	
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>(1);
         values.add("AMF"+String.valueOf(MessageIOConstants.AMF3));
 
         JLabel label = new JLabel("AMF Encoding"); // $NON-NLS-1$
 
-        objectEncodingCombo = new JComboBox(values.toArray());
+        objectEncodingCombo = new JComboBox<>(values.toArray(new String[values.size()]));
         objectEncodingCombo.setEditable(false);
         label.setLabelFor(objectEncodingCombo);
 

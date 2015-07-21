@@ -87,7 +87,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
      * Whether to group requests together based on inactivity separation periods --
      * and how to handle such grouping afterwards.
      */
-    private JComboBox groupingMode;
+    private JComboBox<String> groupingMode;
 
     /**
      * Add an Assertion to the first sample of each set
@@ -107,7 +107,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
     /**
      * The list of sampler type names to choose from
      */
-    private JComboBox samplerTypeName;
+    private JComboBox<String> samplerTypeName;
 
     /**
      * Set/clear the Redirect automatically box on the samplers (default is false)
@@ -148,9 +148,9 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
     /**
      * List of available target controllers
      */
-    private JComboBox targetNodes;
+    private JComboBox<TreeNodeWrapper> targetNodes;
 
-    private DefaultComboBoxModel targetNodesModel;
+    private DefaultComboBoxModel<TreeNodeWrapper> targetNodesModel;
 
     private AmfProxyControl model;
 
@@ -265,7 +265,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
 
     private List<String> getDataList(PowerTableModel p_model, String colName) {
         String[] dataArray = p_model.getData().getColumn(colName);
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         for (int i = 0; i < dataArray.length; i++) {
             list.add(dataArray[i]);
         }
@@ -287,7 +287,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
     /** {@inheritDoc} */
     @Override
     public Collection<String> getMenuCategories() {
-        return Arrays.asList(new String[] { MenuFactory.NON_TEST_ELEMENTS });
+        return Arrays.asList(MenuFactory.NON_TEST_ELEMENTS);
     }
 
     /** {@inheritDoc} */
@@ -577,11 +577,11 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
     }
 
     private JPanel createHTTPSamplerPanel() {
-    	DefaultComboBoxModel m = new DefaultComboBoxModel();
+    	DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
         for (String s : HTTPSamplerFactory.getImplementations()){
             m.addElement(s);
         }
-        samplerTypeName = new JComboBox(m);
+        samplerTypeName = new JComboBox<>(m);
         samplerTypeName.setSelectedIndex(0);
         samplerTypeName.addItemListener(this);
         JLabel label2 = new JLabel(JMeterUtils.getResString("proxy_sampler_type")); // $NON-NLS-1$
@@ -621,8 +621,8 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
     }
 
     private JPanel createTargetPanel() {
-        targetNodesModel = new DefaultComboBoxModel();
-        targetNodes = new JComboBox(targetNodesModel);
+        targetNodesModel = new DefaultComboBoxModel<>();
+        targetNodes = new JComboBox<>(targetNodesModel);
         targetNodes.setActionCommand(CHANGE_TARGET);
         // Action listener will be added later
 
@@ -637,7 +637,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
     }
 
     private JPanel createGroupingPanel() {
-        DefaultComboBoxModel m = new DefaultComboBoxModel();
+        DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
         // Note: position of these elements in the menu *must* match the
         // corresponding ProxyControl.GROUPING_* values.
         m.addElement(JMeterUtils.getResString("grouping_no_groups")); // $NON-NLS-1$
@@ -645,7 +645,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
         m.addElement(JMeterUtils.getResString("grouping_in_controllers")); // $NON-NLS-1$
         m.addElement(JMeterUtils.getResString("grouping_store_first_only")); // $NON-NLS-1$
         m.addElement(JMeterUtils.getResString("grouping_in_transaction_controllers")); // $NON-NLS-1$
-        groupingMode = new JComboBox(m);
+        groupingMode = new JComboBox<String>(m);
         groupingMode.setSelectedIndex(0);
         groupingMode.addItemListener(this);
 
@@ -694,7 +694,8 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
         includeTable.setPreferredScrollableViewportSize(new Dimension(100, 30));
 
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), JMeterUtils
+        panel.setBorder(
+            BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), JMeterUtils
                 .getResString("patterns_to_include"))); // $NON-NLS-1$
 
         panel.add(new JScrollPane(includeTable), BorderLayout.CENTER);
@@ -710,7 +711,8 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
         excludeTable.setPreferredScrollableViewportSize(new Dimension(100, 30));
 
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), JMeterUtils
+        panel.setBorder(
+            BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), JMeterUtils
                 .getResString("patterns_to_exclude"))); // $NON-NLS-1$
 
         panel.add(new JScrollPane(excludeTable), BorderLayout.CENTER);
@@ -752,7 +754,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
         }
         TreeNodeWrapper choice = null;
         for (int i = 0; i < targetNodesModel.getSize(); i++) {
-            choice = (TreeNodeWrapper) targetNodesModel.getElementAt(i);
+            choice = targetNodesModel.getElementAt(i);
             log.debug("Selecting item " + choice + " for model " + model + " in " + this);
             if (choice.getTreeNode() == model.getTarget()) // .equals caused
                                                             // NPE
@@ -772,7 +774,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
         String seperator = " > ";
         if (node != null) {
             for (int i = 0; i < node.getChildCount(); i++) {
-                StringBuilder name = new StringBuilder();
+                StringBuilder name = new StringBuilder(128);
                 JMeterTreeNode cur = (JMeterTreeNode) node.getChildAt(i);
                 TestElement te = cur.getTestElement();
                 /*
@@ -790,7 +792,7 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
                     name.append(cur.getName());
                     TreeNodeWrapper tnw = new TreeNodeWrapper(cur, name.toString());
                     targetNodesModel.addElement(tnw);
-                    name = new StringBuilder();
+                    name = new StringBuilder(128);
                     name.append(cur.getName());
                     name.append(seperator);
                     buildNodesModel(cur, name.toString(), level + 1);
@@ -813,25 +815,25 @@ public class AmfProxyControlGui extends LogicControllerGui implements JMeterGUIC
         return spaces.toString();
     }
 
+    static class TreeNodeWrapper {
+        private final JMeterTreeNode tn;
+
+        private final String label;
+
+        public TreeNodeWrapper(JMeterTreeNode tn, String label) {
+            this.tn = tn;
+            this.label = label;
+        }
+
+        public JMeterTreeNode getTreeNode() {
+            return tn;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public String toString() {
+            return label;
+        }
+    }
 }
 
-class TreeNodeWrapper {
-    private final JMeterTreeNode tn;
-
-    private final String label;
-
-    public TreeNodeWrapper(JMeterTreeNode tn, String label) {
-        this.tn = tn;
-        this.label = label;
-    }
-
-    public JMeterTreeNode getTreeNode() {
-        return tn;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return label;
-    }
-}
