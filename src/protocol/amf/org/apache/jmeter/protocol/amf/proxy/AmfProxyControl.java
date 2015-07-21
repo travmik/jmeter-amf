@@ -49,8 +49,8 @@ import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.TestPlan;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.WorkBench;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -1002,8 +1002,8 @@ public class AmfProxyControl extends GenericController {
             JMeterTreeNode subNode = kids.nextElement();
             if (subNode.isEnabled()) {
                 TestElement testElement = subNode.getTestElement();
-                if (testElement instanceof TestListener) {
-                    ((TestListener) testElement).testStarted();
+                if (testElement instanceof TestStateListener) {
+                    ((TestStateListener) testElement).testStarted();
                 }
             }
         }
@@ -1021,8 +1021,8 @@ public class AmfProxyControl extends GenericController {
             JMeterTreeNode subNode = kids.nextElement();
             if (subNode.isEnabled()) {
                 TestElement testElement = subNode.getTestElement();
-                if (testElement instanceof TestListener) {
-                    ((TestListener) testElement).testEnded();
+                if (testElement instanceof TestStateListener) {
+                    ((TestStateListener) testElement).testEnded();
                 }
             }
         }
