@@ -16,6 +16,7 @@
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter</artifactId>
             <version>${jmeter.version}</version>
+            <scope>provided</scope>
             <!-- Version 2.13 of jMeter has broken dependencies. This disables them -->
             <exclusions>
                 <exclusion>
@@ -34,6 +35,7 @@
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_components</artifactId>
             <version>${jmeter.version}</version>
+            <scope>provided</scope>
             <!-- Version 2.13 of jMeter has broken dependencies. This disables them -->
             <exclusions>
                 <exclusion>
@@ -52,6 +54,7 @@
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_core</artifactId>
             <version>${jmeter.version}</version>
+            <scope>provided</scope>
             <!-- Version 2.13 of jMeter has broken dependencies. This disables them -->
             <exclusions>
                 <exclusion>
@@ -70,6 +73,7 @@
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_mail</artifactId>
             <version>${jmeter.version}</version>
+            <scope>provided</scope>
             <!-- Version 2.13 of jMeter has broken dependencies. This disables them -->
             <exclusions>
                 <exclusion>
@@ -88,6 +92,7 @@
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_http</artifactId>
             <version>${jmeter.version}</version>
+            <scope>provided</scope>
             <!-- Version 2.13 of jMeter has broken dependencies. This disables them -->
             <exclusions>
                 <exclusion>
@@ -106,6 +111,7 @@
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_java</artifactId>
             <version>${jmeter.version}</version>
+            <scope>provided</scope>
             <!-- Version 2.13 of jMeter has broken dependencies. This disables them -->
             <exclusions>
                 <exclusion>
@@ -126,12 +132,14 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.4.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
             <version>2.3</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- ^^^ -->
@@ -186,7 +194,6 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.3</version>
                     <configuration>
-                        <compilerId>jdt</compilerId>
                         <source>1.7</source>
                         <target>1.7</target>
                     </configuration>
