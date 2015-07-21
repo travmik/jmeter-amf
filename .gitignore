@@ -5,3 +5,6 @@
 /build/
 /*.log
 /target
+/.idea
+/.settings
+/jmeter-amf.iml
