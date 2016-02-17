@@ -1,4 +1,4 @@
- JMeter AMF Plugin
+JMeter AMF Plugin
 ---
 
 Welcome to the JMeter-AMF Plugin Project. This plugin gives JMeter the ability to load test applications 
@@ -14,15 +14,15 @@ Did this project save your company a few bucks or a few man hours? Want to encou
 Just feel like buying me a beer? Please donate to help keep it going. 
 https://github.com/steeltomato/jmeter-amf/wiki/Donate
 
- Requirements
+Requirements
 ---
 
 * JMeter 2.6+
 * BlazeDS libraries
 * Optional: JAR containing all classes used for remoting
-  * Provides cleaner, more reliable XML
+    * Provides cleaner, more reliable XML
 
- Installation
+Installation
 ---
 
 1. Click Downloads and grab the latest JMeter-AMF package.
@@ -30,9 +30,9 @@ https://github.com/steeltomato/jmeter-amf/wiki/Donate
 2. Copy JMeter-AMF.jar to jmeter/lib/ext.
 
 3. Download BlazeDS and copy blazeds-common.jar and blazeds-core.jar to jmeter/lib/ext.
-  * http://opensource.adobe.com/wiki/display/blazeds/Downloads
+    * http://opensource.adobe.com/wiki/display/blazeds/Downloads
 
- Credits
+Credits
 ---
 
 This project was created and is maintained by Kenneth Hill (kennethjhill@gmail.com)
